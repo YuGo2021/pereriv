@@ -1,7 +1,4 @@
 
-import re
-import datetime as dt
-import time
 import openpyxl
 from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter, column_index_from_string

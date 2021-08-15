@@ -342,3 +342,90 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
                 sheet_rez1.cell(row = 9, column = i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
                 i_op1 += 1
     return(sheet_rez1, i_op1) 
+
+def new_sheet(wb_grafik, CC_name):
+    if wb_grafik.sheetnames.count(CC_name) == 0:
+        wb_grafik.create_sheet(title = CC_name, index = 0)
+    sheet = wb_grafik[CC_name]
+    sheet['A1'] = "ФИО"
+    sheet['B1'] = "Время работы"
+    sheet['C1'] = "Перерыв 1"
+    sheet['D1'] = "Перерыв 2"
+    sheet['E1'] = "Перерыв 3"
+    sheet['F1'] = "Перерыв 4"
+    sheet['G1'] = "Перерыв 5"
+    return(sheet)
+
+def time_chek(cell):
+    #print(type(cell))
+    if type(cell) == dt.time:
+        time_start = cell.strftime("%H:%M")
+        #print(time_start)
+        if time_start[0] == "0":
+            time_start = time_start[1:]
+    else:    
+        time_start = cell
+        if time_start[5:7] == ":00":
+            time_start = time_start[0:4]
+        
+        if time_start[0] == "0":
+            time_start = time_start[1:]
+    return time_start
+
+def get_grafik(sheet_per, sheet_list, CC_name):
+    # формируем рассылку для CC_name
+    thin = Side(border_style="thin", color="000000")
+    double = Side(border_style="double", color="ff0000")
+    medium = Side(border_style="medium", color="000000")
+    no = 2
+    for kol in range(4,sheet_per.max_column + 1 ):
+         
+        if sheet_per.cell(row = 1, column = kol).value == 'Смирновка':
+            sheet_list.cell(row = no, column = 1).value = sheet_per.cell(row = 2, column = kol).value
+            sheet_list.cell(row = no, column = 2).value = f"{time_chek(sheet_per.cell(row = 4, column = kol).value)}-{time_chek(sheet_per.cell(row = 5, column = kol).value)}"
+            per_berin = 10
+            per_end = 10
+            no_sm = 3
+            for st in range(10, sheet_per.max_row + 1):
+                if sheet_per.cell(row = st, column = kol).value == 5 and st > per_end:
+                    per_berin = st
+                    for st_per in range(st, sheet_per.max_row + 1):
+                        if sheet_per.cell(row = st_per, column = kol).value != 5:
+                            per_end = st_per - 1
+                            break
+                    #print(per_berin, per_end)
+                    for st_beg in range(per_berin, per_berin - 12, -1):
+                        if sheet_per.cell(row = st_beg, column = 1).value is not None:
+                            hour_begin = time_shift(shift(sheet_per.cell(row = st_beg, column = 1).value)[0])[0]
+                            break
+                                 
+                    min_begin = time_shift(sheet_per.cell(row = per_berin, column = 2).value)[0]
+                    for st_end in range(per_end, per_end - 12, -1):
+                        if sheet_per.cell(row = st_end, column = 1).value is not None:
+                            hour_end = time_shift(shift(sheet_per.cell(row = st_end, column = 1).value)[0])[0]
+                            break
+                                
+                    min_end = time_shift(sheet_per.cell(row = per_end, column = 2).value)[1]
+                    if min_end == "60":
+                        min_end = "00"
+                        hour_end = int(hour_end) + 1 
+                    elif min_end == "0":
+                        min_end = "00"
+                    elif min_end == "5":
+                        min_end = "05"
+                    
+                    if min_begin == "0":
+                        min_begin = "00"
+                    elif min_begin == "5":
+                        min_begin = "05"
+                    elif min_begin == "60":
+                        min_begin = "00"
+                        hour_begin = int(hour_begin) + 1 
+                    
+                    sheet_list.cell(row = no, column = no_sm).value = f"{hour_begin}:{min_begin}-{hour_end}:{min_end}"
+                    no_sm += 1
+            no += 1
+    for i in range(1, sheet_list.max_column + 1):
+        for j in range(1, sheet_list.max_row + 1):
+            sheet_list.cell(row = j, column = i).border = Border(top=thin, left=thin, right=thin, bottom=thin)
+    return()
