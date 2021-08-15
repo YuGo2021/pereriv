@@ -103,14 +103,14 @@ def nsk(cell):
     return (f"{time_hour}:{time_min}")
 
 def sting_no(sheet):
-    for i in range(1, sheet_grafik1.max_row + 1):
-        if sheet_grafik1.cell(row = i, column = 6).value == "ОПЕРАТОРЫ 5/2":
+    for i in range(1, sheet_grafik.max_row + 1):
+        if sheet_grafik.cell(row = i, column = 6).value == "ОПЕРАТОРЫ 5/2":
             i_5_2 = i
             #print(i_5_2)
-        if sheet_grafik1.cell(row = i, column = 6).value== "ОПЕРАТОРЫ 2/2":
+        if sheet_grafik.cell(row = i, column = 6).value== "ОПЕРАТОРЫ 2/2":
             i_2_2 = i
             #print(i_2_2)
-        if sheet_grafik1.cell(row = i, column = 6).value== "НЕПОЛНЫЙ РАБОЧИЙ ДЕНЬ" or sheet_grafik1.cell(row = i, column = 6).value == "ОПЕРАТОРЫ  неполного рабочего  дня":
+        if sheet_grafik.cell(row = i, column = 6).value== "НЕПОЛНЫЙ РАБОЧИЙ ДЕНЬ" or sheet_grafik.cell(row = i, column = 6).value == "ОПЕРАТОРЫ  неполного рабочего  дня":
             i_1_2 = i
             #print(i_1_2)
     return (i_5_2, i_2_2, i_1_2)
@@ -241,93 +241,104 @@ def sum_cell(line1,line2,sheet):
                 sum_lines += sheet.cell(row=line, column=z).value
     return sum_lines
 
-def pereriv_CC(sheet_grafik1, i_op, sheet_rez, CC_name):
+def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
     redFill = PatternFill(start_color='FFEE1111', end_color='FFEE1111', fill_type='solid')
     greenFill = PatternFill(start_color='1FB714', end_color='1FB714', fill_type='solid')
     yellowFill = PatternFill(start_color='FCF305', end_color='FCF305', fill_type='solid')
     i_5_2 = 0
     i_2_2 = 0
     i_1_2 = 0
-    for i in range(1, sheet_grafik1.max_row + 1):
-        if sheet_grafik1.cell(row = i, column = 6).value == "ОПЕРАТОРЫ 5/2":
+    for i in range(1, sheet_grafik.max_row + 1):
+        if sheet_grafik.cell(row = i, column = 6).value == "ОПЕРАТОРЫ 5/2":
             i_5_2 = i
             #print(i_5_2)
-        if sheet_grafik1.cell(row = i, column = 6).value== "ОПЕРАТОРЫ 2/2":
+        if sheet_grafik.cell(row = i, column = 6).value== "ОПЕРАТОРЫ 2/2":
             i_2_2 = i
             #print(i_2_2)
-        if sheet_grafik1.cell(row = i, column = 6).value== "НЕПОЛНЫЙ РАБОЧИЙ ДЕНЬ" or sheet_grafik1.cell(row = i, column = 6).value == "ОПЕРАТОРЫ  неполного рабочего  дня":
+        if sheet_grafik.cell(row = i, column = 6).value== "НЕПОЛНЫЙ РАБОЧИЙ ДЕНЬ" or sheet_grafik.cell(row = i, column = 6).value == "ОПЕРАТОРЫ  неполного рабочего  дня":
             i_1_2 = i
             #print(i_1_2)
+    
+    if i_5_2 > 0:
+        if i_2_2 == 0:
+            if i_1_2 == 0:
+                i_1_2 = sheet_grafik.max_row + 4        
+    if i_2_2 == 0:
+        if i_1_2 == 0:
+            i_1_2 = sheet_grafik.max_row + 4
+    if i_1_2 == 0:
+            i_1_2 = sheet_grafik.max_row + 4
 
     oper = ""
-    if i_op < 4:
-        i_op = 4
+    if i_op1 < 4:
+        i_op1 = 4
 
 
-    #for k in range (sting_no(sheet_grafik1)[0],sting_no(sheet_grafik1)[1]-3):
-     #   if sheet_grafik1.cell(row = k, column = 5).value is not None and sheet_grafik1.cell(row = k, column = 6).value is not None and (type(sheet_grafik1.cell(row = k, column = 9).value) == int or type(sheet_grafik1.cell(row = k, column = 9).value) == float or type(sheet_grafik1.cell(row = k+1, column = 9).value) == int or type(sheet_grafik1.cell(row = k+1, column = 9).value) == float):
-            #print(find_cell(k, sheet_grafik1, CC_name, "5/2")[6])
+    #for k in range (sting_no(sheet_grafik)[0],sting_no(sheet_grafik)[1]-3):
+     #   if sheet_grafik.cell(row = k, column = 5).value is not None and sheet_grafik.cell(row = k, column = 6).value is not None and (type(sheet_grafik.cell(row = k, column = 9).value) == int or type(sheet_grafik.cell(row = k, column = 9).value) == float or type(sheet_grafik.cell(row = k+1, column = 9).value) == int or type(sheet_grafik.cell(row = k+1, column = 9).value) == float):
+            #print(find_cell(k, sheet_grafik, CC_name, "5/2")[6])
       #      for n in range (6):
-       #         sheet_rez.cell(row = n+1, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "5/2")[n]
-        #    i_op += 1
+       #         sheet_rez1.cell(row = n+1, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[n]
+        #    i_op1 += 1
     if i_5_2 > 0:
         for k in range(i_5_2+1, i_2_2-3): 
-            if sheet_grafik1.cell(row = k, column = 5).value is not None and sheet_grafik1.cell(row = k, column = 6).value is not None and (type(sheet_grafik1.cell(row = k, column = 9).value) == int or type(sheet_grafik1.cell(row = k, column = 9).value) == float or type(sheet_grafik1.cell(row = k+1, column = 9).value) == int or type(sheet_grafik1.cell(row = k+1, column = 9).value) == float):
-                oper = fio_full(sheet_grafik1.cell(row = k, column = 6).value)
+            if sheet_grafik.cell(row = k, column = 5).value is not None and sheet_grafik.cell(row = k, column = 6).value is not None and (type(sheet_grafik.cell(row = k, column = 9).value) == int or type(sheet_grafik.cell(row = k, column = 9).value) == float or type(sheet_grafik.cell(row = k+1, column = 9).value) == int or type(sheet_grafik.cell(row = k+1, column = 9).value) == float):
+                oper = fio_full(sheet_grafik.cell(row = k, column = 6).value)
                 print(oper)
-                sheet_rez.cell(row = 1, column = i_op).value = CC_name
-                sheet_rez.cell(row = 2, column = i_op).value = fio(oper)
-                sheet_rez.cell(row = 3, column = i_op).value = "5/2"
-                sheet_rez.cell(row = 4, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[0]
-                #print(shift(sheet_grafik1.cell(row = k, column = 5).value)[0])
-                sheet_rez.cell(row = 5, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[1]
-                #print(shift(sheet_grafik1.cell(row = k, column = 5).value)[1])
-                sheet_rez.cell(row = 6, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "5/2")[3]
-                sheet_rez.cell(row = 7, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "5/2")[4]
-                sheet_rez.cell(row = 8, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "5/2")[5]
-                if find_cell(k, sheet_grafik1, CC_name, "5/2")[7] == 1:
-                    sheet_rez.cell(row = 8, column = i_op).fill = redFill
-                sheet_rez.cell(row = 9, column = i_op).value = f"=SUM({get_column_letter(i_op)}10:{get_column_letter(i_op)}273)"
-                #if sheet_grafik1.cell(row = k, column = 9).value is not None and sheet_grafik1.cell(row = k+1, column = 9).value is not None:
-                 #   sheet_rez.cell(row = 6, column = i_op).value = sheet_grafik1.cell(row = k, column = 9).value + sheet_grafik1.cell(row = k+1, column = 9).value
-                #elif sheet_grafik1.cell(row = k, column = 9).value is not None and sheet_grafik1.cell(row = k+1, column = 9).value is None:
-                 #   sheet_rez.cell(row = 6, column = i_op).value = sheet_grafik1.cell(row = k, column = 9).value
+                sheet_rez1.cell(row = 1, column = i_op1).value = CC_name
+                sheet_rez1.cell(row = 2, column = i_op1).value = fio(oper)
+                sheet_rez1.cell(row = 3, column = i_op1).value = "5/2"
+                sheet_rez1.cell(row = 4, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[0]
+                #print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                sheet_rez1.cell(row = 5, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[1]
+                #print(shift(sheet_grafik.cell(row = k, column = 5).value)[1])
+                sheet_rez1.cell(row = 6, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[3]
+                sheet_rez1.cell(row = 7, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[4]
+                sheet_rez1.cell(row = 8, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[5]
+                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                    sheet_rez1.cell(row = 8, column = i_op1).fill = redFill
+                sheet_rez1.cell(row = 9, column = i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                #if sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is not None:
+                 #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value + sheet_grafik.cell(row = k+1, column = 9).value
+                #elif sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is None:
+                 #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value
                 #else:
-                 #   sheet_rez.cell(row = 6, column = i_op).value = sheet_grafik1.cell(row = k+1, column = 9).value
+                 #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k+1, column = 9).value
                 
-                i_op += 1
-    if i_2_2 > 0:           
+                i_op1 += 1
+    if i_2_2 > 0:
+
         for k in range(i_2_2+1,  i_1_2-3): 
-            if sheet_grafik1.cell(row = k, column = 4).value is not None and sheet_grafik1.cell(row = k, column = 6).value is not None and (type(sheet_grafik1.cell(row = k, column = 9).value) == int or type(sheet_grafik1.cell(row = k, column = 9).value) == float  or type(sheet_grafik1.cell(row = k+1, column = 9).value) == int or type(sheet_grafik1.cell(row = k+1, column = 9).value) == float):
-                oper = fio_full(sheet_grafik1.cell(row = k, column = 6).value)
+            if sheet_grafik.cell(row = k, column = 4).value is not None and sheet_grafik.cell(row = k, column = 6).value is not None and (type(sheet_grafik.cell(row = k, column = 9).value) == int or type(sheet_grafik.cell(row = k, column = 9).value) == float  or type(sheet_grafik.cell(row = k+1, column = 9).value) == int or type(sheet_grafik.cell(row = k+1, column = 9).value) == float):
+                oper = fio_full(sheet_grafik.cell(row = k, column = 6).value)
                 print(oper)
-                sheet_rez.cell(row = 1, column = i_op).value = CC_name
-                sheet_rez.cell(row = 2, column = i_op).value = fio(oper)
-                sheet_rez.cell(row = 3, column = i_op).value = "2/2"
-                sheet_rez.cell(row = 4, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[0]
-                sheet_rez.cell(row = 5, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[1]
-                sheet_rez.cell(row = 6, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "2/2")[3]
-                sheet_rez.cell(row = 7, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "2/2")[4]
-                sheet_rez.cell(row = 8, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "2/2")[5]
-                if find_cell(k, sheet_grafik1, CC_name, "5/2")[7] == 1:
-                    sheet_rez.cell(row = 8, column = i_op).fill = redFill
-                sheet_rez.cell(row = 9, column = i_op).value = f"=SUM({get_column_letter(i_op)}10:{get_column_letter(i_op)}273)"
-                i_op += 1
+                sheet_rez1.cell(row = 1, column = i_op1).value = CC_name
+                sheet_rez1.cell(row = 2, column = i_op1).value = fio(oper)
+                sheet_rez1.cell(row = 3, column = i_op1).value = "2/2"
+                sheet_rez1.cell(row = 4, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[0]
+                sheet_rez1.cell(row = 5, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[1]
+                sheet_rez1.cell(row = 6, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[3]
+                sheet_rez1.cell(row = 7, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[4]
+                sheet_rez1.cell(row = 8, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[5]
+                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                    sheet_rez1.cell(row = 8, column = i_op1).fill = redFill
+                sheet_rez1.cell(row = 9, column = i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                i_op1 += 1
     if i_1_2 > 0:
-        for k in range(i_1_2+1,  sheet_grafik1.max_row + 1): 
-            if sheet_grafik1.cell(row = k, column = 4).value is not None and sheet_grafik1.cell(row = k, column = 6).value is not None and (type(sheet_grafik1.cell(row = k, column = 9).value) == int or type(sheet_grafik1.cell(row = k, column = 9).value) == float  or type(sheet_grafik1.cell(row = k+1, column = 9).value) == int or type(sheet_grafik1.cell(row = k+1, column = 9).value) == float):
-                oper = fio_full(sheet_grafik1.cell(row = k, column = 6).value)
+        for k in range(i_1_2+1,  sheet_grafik.max_row + 1): 
+            if sheet_grafik.cell(row = k, column = 4).value is not None and sheet_grafik.cell(row = k, column = 6).value is not None and (type(sheet_grafik.cell(row = k, column = 9).value) == int or type(sheet_grafik.cell(row = k, column = 9).value) == float  or type(sheet_grafik.cell(row = k+1, column = 9).value) == int or type(sheet_grafik.cell(row = k+1, column = 9).value) == float):
+                oper = fio_full(sheet_grafik.cell(row = k, column = 6).value)
                 print(oper)
-                sheet_rez.cell(row = 1, column = i_op).value = CC_name
-                sheet_rez.cell(row = 2, column = i_op).value = fio(oper)
-                sheet_rez.cell(row = 3, column = i_op).value = "1/2"
-                sheet_rez.cell(row = 4, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[0]
-                sheet_rez.cell(row = 5, column = i_op).value = shift(sheet_grafik1.cell(row = k, column = 5).value)[1]
-                sheet_rez.cell(row = 6, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "1/2")[3]
-                sheet_rez.cell(row = 7, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "1/2")[4]
-                sheet_rez.cell(row = 8, column = i_op).value = find_cell(k, sheet_grafik1, CC_name, "1/2")[5]
-                if find_cell(k, sheet_grafik1, CC_name, "5/2")[7] == 1:
-                    sheet_rez.cell(row = 8, column = i_op).fill = redFill
-                sheet_rez.cell(row = 9, column = i_op).value = f"=SUM({get_column_letter(i_op)}10:{get_column_letter(i_op)}273)"
-                i_op += 1
-    return(sheet_rez, i_op) 
+                sheet_rez1.cell(row = 1, column = i_op1).value = CC_name
+                sheet_rez1.cell(row = 2, column = i_op1).value = fio(oper)
+                sheet_rez1.cell(row = 3, column = i_op1).value = "1/2"
+                sheet_rez1.cell(row = 4, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[0]
+                sheet_rez1.cell(row = 5, column = i_op1).value = shift(sheet_grafik.cell(row = k, column = 5).value)[1]
+                sheet_rez1.cell(row = 6, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[3]
+                sheet_rez1.cell(row = 7, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[4]
+                sheet_rez1.cell(row = 8, column = i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[5]
+                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                    sheet_rez1.cell(row = 8, column = i_op1).fill = redFill
+                sheet_rez1.cell(row = 9, column = i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                i_op1 += 1
+    return(sheet_rez1, i_op1) 
