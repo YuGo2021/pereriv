@@ -1,19 +1,13 @@
 import openpyxl
-from openpyxl.styles import PatternFill
-from openpyxl.utils import get_column_letter, column_index_from_string
-from openpyxl.styles import Border, Side
 import pereriv_lib as per
-
-
-
-
 
     
 wb_grafik_per = openpyxl.load_workbook(f"перерывы_сборка.xlsx")
 for s in range(len(wb_grafik_per.sheetnames)):
     if wb_grafik_per.sheetnames[s] == 'перерывы':
+        wb_grafik_per.active = s
         break
-wb_grafik_per.active = s
+
 
 print("Готовим таблицы для рассылки...")
 sheet_per = wb_grafik_per.active
@@ -25,8 +19,6 @@ sheet_nsk = per.new_sheet(wb_grafik_per, "НСК")
 sheet_kir = per.new_sheet(wb_grafik_per, "Киров")
 sheet_rost = per.new_sheet(wb_grafik_per, "Ростов")
 sheet_nn = per.new_sheet(wb_grafik_per, "НиНо")
-
-
 
 # формируем рассылку для Смирновки
 per.get_grafik(sheet_per, sheet_sm, "Смирновка")
@@ -49,6 +41,8 @@ per.get_grafik(sheet_per, sheet_nn, "НиНо")
  
 try:
     wb_grafik_per.save(f"перерывы_сборка.xlsx") 
-    input("Таблицы для рассылки подготовлены. Открываем файл перерывы_сборка.xlsx и проверяем. Нажмите ENTER для продолжения...") 
+    input("Таблицы для рассылки подготовлены. Открываем файл перерывы_сборка.xlsx и "
+          "проверяем. Нажмите ENTER для продолжения...")
 except OSError:
-    input("Невозможно сохранить данные. Закройте файл перерывы_сборка.xlsx и запустите программу заново. Нажмите ENTER для продолжения...")
+    input("Невозможно сохранить данные. Закройте файл перерывы_сборка.xlsx и "
+          "запустите программу заново. Нажмите ENTER для продолжения...")
