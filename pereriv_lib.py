@@ -406,7 +406,7 @@ def get_grafik(sheet_per, sheet_list, CC_name):
     no = 2
     for kol in range(4, sheet_per.max_column + 1):
 
-        if sheet_per.cell(row=1, column=kol).value == 'Смирновка':
+        if sheet_per.cell(row=1, column=kol).value == CC_name:
             sheet_list.cell(row=no, column=1).value = sheet_per.cell(row=2, column=kol).value
             sheet_list.cell(row=no,
                             column=2).value = f"{time_chek(sheet_per.cell(row=4, column=kol).value)}-{time_chek(sheet_per.cell(row=5, column=kol).value)}"

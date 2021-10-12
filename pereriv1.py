@@ -21,6 +21,9 @@ sheet_grafik5 = wb_grafik5.active
 wb_grafik6 = openpyxl.load_workbook("Нижний Новгород.xlsx")
 sheet_grafik6 = wb_grafik6.active
 
+wb_grafik7 = openpyxl.load_workbook("Тверь.xlsx")
+sheet_grafik7 = wb_grafik7.active
+
 wb_rez = openpyxl.Workbook()
 wb_rez.create_sheet(title='перерывы', index=0)
 sheet_rez = wb_rez['перерывы']
@@ -42,6 +45,7 @@ sheet_rez['A9'] = "Сумма перерывов"
 thin = Side(border_style="thin", color="000000")
 double = Side(border_style="double", color="ff0000")
 medium = Side(border_style="medium", color="000000")
+
 
 i_op = 0
 # Собираем Смирновку 
@@ -67,6 +71,10 @@ i_op = per.pereriv_CC(sheet_grafik5, i_op, sheet_rez, "Ростов")[1]
 # собираем Нижний Новгород
 sheet_rez = per.pereriv_CC(sheet_grafik6, i_op, sheet_rez, "НиНо")[0]
 i_op = per.pereriv_CC(sheet_grafik6, i_op, sheet_rez, "НиНо")[1]
+
+# собираем Тверь
+sheet_rez = per.pereriv_CC(sheet_grafik7, i_op, sheet_rez, "Тверь")[0]
+i_op = per.pereriv_CC(sheet_grafik7, i_op, sheet_rez, "Тверь")[1]
 
 for i in range(1, sheet_rez.max_column + 1):
     for j in range(1, sheet_rez.max_row + 1):

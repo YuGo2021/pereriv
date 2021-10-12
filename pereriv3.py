@@ -19,6 +19,7 @@ sheet_nsk = per.new_sheet(wb_grafik_per, "НСК")
 sheet_kir = per.new_sheet(wb_grafik_per, "Киров")
 sheet_rost = per.new_sheet(wb_grafik_per, "Ростов")
 sheet_nn = per.new_sheet(wb_grafik_per, "НиНо")
+sheet_tver = per.new_sheet(wb_grafik_per, "Тверь")
 
 # формируем рассылку для Смирновки
 per.get_grafik(sheet_per, sheet_sm, "Смирновка")
@@ -37,6 +38,9 @@ per.get_grafik(sheet_per, sheet_rost, "Ростов")
  
 # формируем рассылку для Нижнего Новгорода
 per.get_grafik(sheet_per, sheet_nn, "НиНо")
+
+# формируем рассылку для Тверь
+per.get_grafik(sheet_per, sheet_tver, "Тверь")
 
  
 try:
