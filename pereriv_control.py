@@ -103,8 +103,13 @@ def main() -> object:
             elif min_beg == "5":
                 min_beg = "05"
             probel = " "
-            print(f"{sheet_per.cell(row = 2, column = kol).value} {probel*(20-len(sheet_per.cell(row = 2, column = kol).value))}{hour_beg}:{min_beg} - {hour_end}:{min_end}")
+            #print(f"{sheet_per.cell(row = 2, column = kol).value} {probel*(20-len(sheet_per.cell(row = 2, column = kol).value))}{hour_beg}:{min_beg} - {hour_end}:{min_end}")
             #print(f"{sheet_per.cell(row = 2, column = kol).value} до {hour_end}:{min_end}")
+            print(f"{sheet_per.cell(row=1, column=kol).value} "
+                  f"{probel * (15 - len(sheet_per.cell(row=1, column=kol).value))}"
+                  f"{sheet_per.cell(row=2, column=kol).value} "
+                  f"{probel * (20 - len(sheet_per.cell(row=2, column=kol).value))}"
+                  f"{hour_beg}:{min_beg} - {hour_end}:{min_end}")
 
     while True:
         now = dt.datetime.now()
@@ -154,7 +159,12 @@ def main() -> object:
                     elif min_beg == "5":
                         min_beg = "05"
                     probel = " "
-                    print(f"{sheet_per.cell(row = 2, column = kol).value} {probel*(20-len(sheet_per.cell(row = 2, column = kol).value))}{hour_beg}:{min_beg} - {hour_end}:{min_end}")
+                    #print(f"{sheet_per.cell(row = 2, column = kol).value} {probel*(20-len(sheet_per.cell(row = 2, column = kol).value))}{hour_beg}:{min_beg} - {hour_end}:{min_end}")
+                    print(f"{sheet_per.cell(row=1, column=kol).value} "
+                        f"{probel * (15 - len(sheet_per.cell(row=1, column=kol).value))}"
+                        f"{sheet_per.cell(row=2, column=kol).value} "
+                        f"{probel * (20 - len(sheet_per.cell(row=2, column=kol).value))}"
+                        f"{hour_beg}:{min_beg} - {hour_end}:{min_end}")
         time.sleep(5)
 #    Thread(target=main).start()
 
