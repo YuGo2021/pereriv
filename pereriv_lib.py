@@ -287,12 +287,13 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
 
     if i_5_2 > 0:
         for k in range(i_5_2 + 1, i_2_2 - 3):
-            if (sheet_grafik.cell(row=k, column=5).value is not None and
-                    sheet_grafik.cell(row=k, column=6).value is not None and (
-                    type(sheet_grafik.cell(row=k, column=9).value) == int or
-                    type(sheet_grafik.cell(row=k, column=9).value) == float or
-                    type(sheet_grafik.cell(row=k + 1, column=9).value) == int or
-                    type(sheet_grafik.cell(row=k + 1, column=9).value) == float)):
+            if sheet_grafik.cell(row=k, column=4).value is not None \
+                    and sheet_grafik.cell(row=k, column=6).value is not None \
+                    and sheet_grafik.cell(row=k, column=5).value is not None \
+                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+                sheet_grafik.cell(row=k, column=9).value) == float or type(
+                sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
+                sheet_grafik.cell(row=k + 1, column=9).value) == float):
                 oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
                 print(oper)
                 sheet_rez1.cell(row=1, column=i_op1).value = CC_name
@@ -326,9 +327,10 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
     if i_2_2 > 0:
 
         for k in range(i_2_2 + 1, i_1_2 - 3):
-            if sheet_grafik.cell(row=k, column=4).value is not None and sheet_grafik.cell(row=k,
-                                                                                          column=6).value is not None and (
-                    type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+            if sheet_grafik.cell(row=k, column=4).value is not None \
+                    and sheet_grafik.cell(row=k, column=6).value is not None \
+                    and sheet_grafik.cell(row=k, column=5).value is not None \
+                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
                     sheet_grafik.cell(row=k, column=9).value) == float or type(
                     sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
                     sheet_grafik.cell(row=k + 1, column=9).value) == float):
@@ -355,12 +357,13 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
                 i_op1 += 1
     if i_1_2 > 0:
         for k in range(i_1_2 + 1, sheet_grafik.max_row + 1):
-            if sheet_grafik.cell(row=k, column=4).value is not None and sheet_grafik.cell(row=k,
-                                                                                          column=6).value is not None and (
-                    type(sheet_grafik.cell(row=k, column=9).value) == int or type(
-                    sheet_grafik.cell(row=k, column=9).value) == float or type(
-                    sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
-                    sheet_grafik.cell(row=k + 1, column=9).value) == float):
+            if sheet_grafik.cell(row=k, column=4).value is not None \
+                    and sheet_grafik.cell(row=k, column=6).value is not None \
+                    and sheet_grafik.cell(row=k, column=5).value is not None \
+                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+                sheet_grafik.cell(row=k, column=9).value) == float or type(
+                sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
+                sheet_grafik.cell(row=k + 1, column=9).value) == float):
                 oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
                 print(oper)
                 sheet_rez1.cell(row=1, column=i_op1).value = CC_name
