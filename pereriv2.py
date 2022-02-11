@@ -360,6 +360,18 @@ for g in range(4, sheet_rez.max_column + 1):
         sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value.strftime("%H:%M")
         if sheet_rez.cell(row=4, column=g).value[0] == "0":
             sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
+        if sheet_rez.cell(row=4, column=g).value[:-1] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
+            if round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(1, 60):
+                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + str(
+                    round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
+            elif round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(0, 6):
+                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + \
+                                                        str(round(
+                                                            int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10) \
+                                                        + "0"
+            else:
+                sheet_rez.cell(row=4, column=g).value = str(
+                    int(time_shift(sheet_rez.cell(row=4, column=g).value)[0]) + 1) + ":00"
     time_start = str(sheet_rez.cell(row=4, column=g).value)
     # print(type(time_start))
     # print(time_start)
@@ -376,6 +388,17 @@ for g in range(4, sheet_rez.max_column + 1):
         sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value.strftime("%H:%M")
         if sheet_rez.cell(row=5, column=g).value[0] == "0":
             sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
+        if sheet_rez.cell(row=5, column=g).value[:-1] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
+            if round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(1, 60):
+                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + str(
+                    round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
+            elif round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range (0,6):
+                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + \
+                                                        str(round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10) \
+                                                        + "0"
+            else:
+                sheet_rez.cell(row=5, column=g).value = str(
+                    int(time_shift(sheet_rez.cell(row=5, column=g).value)[0]) + 1) + ":00"
     time_end = str(sheet_rez.cell(row=5, column=g).value)
     # print(time_end)
     # закрашиваем шифты
@@ -403,7 +426,9 @@ for g in range(4, sheet_rez.max_column + 1):
                 for e in range(l, l + 12):
                     if time_shift(time_end)[1] == time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
                         i_shift_end = e
-                        # print(i_shift_end)
+
+                    elif time_shift(time_end)[1] > time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
+                        i_shift_end = e
     print(sheet_rez.cell(row=2, column=g).value)
     # print(i_shift_start)
     # print(i_shift_end)
