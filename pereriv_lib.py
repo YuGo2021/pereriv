@@ -298,9 +298,15 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
                 sheet_rez1.cell(row=1, column=i_op1).value = CC_name
                 sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
                 sheet_rez1.cell(row=3, column=i_op1).value = "5/2"
-                sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                if CC_name == "НСК":
+                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
                 # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                else:
+                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+
                 # print(shift(sheet_grafik.cell(row = k, column = 5).value)[1])
                 sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[3]
                 sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[4]
@@ -331,8 +337,14 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
                 sheet_rez1.cell(row=1, column=i_op1).value = CC_name
                 sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
                 sheet_rez1.cell(row=3, column=i_op1).value = "2/2"
-                sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
-                sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+                if CC_name == "НСК":
+                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                else:
+                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
                 sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[3]
                 sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[4]
                 sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[5]
@@ -354,8 +366,14 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
                 sheet_rez1.cell(row=1, column=i_op1).value = CC_name
                 sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
                 sheet_rez1.cell(row=3, column=i_op1).value = "1/2"
-                sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
-                sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+                if CC_name == "НСК":
+                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                else:
+                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
                 sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[3]
                 sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[4]
                 sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[5]
@@ -408,7 +426,15 @@ def get_grafik(sheet_per, sheet_list, CC_name):
 
         if sheet_per.cell(row=1, column=kol).value == CC_name:
             sheet_list.cell(row=no, column=1).value = sheet_per.cell(row=2, column=kol).value
-            sheet_list.cell(row=no,
+            if CC_name == "НСК":
+                time_start = f"{int(time_chek(sheet_per.cell(row=4, column=kol).value)[:-3]) + 4}{time_chek(sheet_per.cell(row=4, column=kol).value)[-3:]}"
+
+                time_end = f"{int(time_chek(sheet_per.cell(row=5, column=kol).value)[:-3]) + 4}{time_chek(sheet_per.cell(row=5, column=kol).value)[-3:]}"
+
+                sheet_list.cell(row=no,
+                                column=2).value = f"{time_start}-{time_end}"
+            else:
+                sheet_list.cell(row=no,
                             column=2).value = f"{time_chek(sheet_per.cell(row=4, column=kol).value)}-{time_chek(sheet_per.cell(row=5, column=kol).value)}"
             per_berin = 10
             per_end = 10
@@ -449,7 +475,10 @@ def get_grafik(sheet_per, sheet_list, CC_name):
                         min_begin = "00"
                         hour_begin = int(hour_begin) + 1
 
-                    sheet_list.cell(row=no, column=no_sm).value = f"{hour_begin}:{min_begin}-{hour_end}:{min_end}"
+                    if CC_name == "НСК":
+                        sheet_list.cell(row=no, column=no_sm).value = f"{int(hour_begin) + 4}:{min_begin}-{int(hour_end) + 4}:{min_end}"
+                    else:
+                        sheet_list.cell(row=no, column=no_sm).value = f"{hour_begin}:{min_begin}-{hour_end}:{min_end}"
                     no_sm += 1
             no += 1
     for i in range(1, sheet_list.max_column + 1):
