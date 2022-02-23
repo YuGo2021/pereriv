@@ -401,6 +401,19 @@ def new_sheet(wb_grafik, CC_name):
     sheet['G1'] = "Перерыв 5"
     return sheet
 
+def new_sheet_oktel(wb_grafik, CC_name):
+    if wb_grafik.sheetnames.count(CC_name) == 0:
+        wb_grafik.create_sheet(title=CC_name, index=0)
+    sheet = wb_grafik[CC_name]
+    sheet['A1'] = "name"
+    sheet['B1'] = "wtime"
+    sheet['C1'] = "break1"
+    sheet['D1'] = "break2"
+    sheet['E1'] = "break3"
+    sheet['F1'] = "break4"
+    sheet['G1'] = "break5"
+    return sheet
+
 
 def time_chek(cell):
     # print(type(cell))
@@ -413,7 +426,6 @@ def time_chek(cell):
         time_start = cell
         if time_start[5:7] == ":00":
             time_start = time_start[0:4]
-
         if time_start[0] == "0":
             time_start = time_start[1:]
     return time_start
@@ -484,6 +496,81 @@ def get_grafik(sheet_per, sheet_list, CC_name):
                         sheet_list.cell(row=no, column=no_sm).value = f"{hour_begin}:{min_begin}-{hour_end}:{min_end}"
                     no_sm += 1
             no += 1
+    for i in range(1, sheet_list.max_column + 1):
+        for j in range(1, sheet_list.max_row + 1):
+            sheet_list.cell(row=j, column=i).border = Border(top=thin, left=thin, right=thin, bottom=thin)
+    return ()
+
+
+def get_grafik_oktel(sheet_per, sheet_list):
+    # формируем рассылку для CC_name
+    thin = Side(border_style="thin", color="000000")
+    double = Side(border_style="double", color="ff0000")
+    medium = Side(border_style="medium", color="000000")
+    no = 2
+    for kol in range(4, sheet_per.max_column + 1):
+        sheet_list.cell(row=no, column=1).value = sheet_per.cell(row=2, column=kol).value
+        CC_name = sheet_per.cell(row=1, column=kol).value
+        hour_beg_temp = time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[0]
+        if len(hour_beg_temp) == 1:
+            hour_beg_temp = "0" + hour_beg_temp
+        hour_end_temp = time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[0]
+        if len(hour_end_temp) == 1:
+            hour_end_temp = "0" + hour_beg_temp
+        sheet_list.cell(row=no,
+                    column=2).value = f"{hour_beg_temp}:" \
+                                      f"{time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[1]}-" \
+                                      f"{hour_end_temp}:" \
+                                      f"{time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[1]}"
+        per_berin = 10
+        per_end = 10
+        no_sm = 3
+        for st in range(10, sheet_per.max_row + 1):
+            if sheet_per.cell(row=st, column=kol).value == 5 and st > per_end:
+                per_berin = st
+                for st_per in range(st, sheet_per.max_row + 1):
+                    if sheet_per.cell(row=st_per, column=kol).value != 5:
+                        per_end = st_per - 1
+                        break
+                # print(per_berin, per_end)
+                for st_beg in range(per_berin, per_berin - 12, -1):
+                    if sheet_per.cell(row=st_beg, column=1).value is not None:
+                        hour_begin = time_shift(shift(sheet_per.cell(row=st_beg, column=1).value)[0])[0]
+                        if len(str(hour_begin)) == 1:
+                            hour_begin = "0" + str(hour_begin)
+                        break
+
+                min_begin = time_shift(sheet_per.cell(row=per_berin, column=2).value)[0]
+                for st_end in range(per_end, per_end - 12, -1):
+                    if sheet_per.cell(row=st_end, column=1).value is not None:
+                        hour_end = time_shift(shift(sheet_per.cell(row=st_end, column=1).value)[0])[0]
+                        if len(str(hour_end)) == 1:
+                            hour_end = "0" + str(hour_end)
+                        break
+
+                min_end = time_shift(sheet_per.cell(row=per_end, column=2).value)[1]
+                if min_end == "60":
+                    min_end = "00"
+                    hour_end = int(hour_end) + 1
+                    if len(str(hour_end)) == 1:
+                        hour_end = "0" + str(hour_end)
+                elif min_end == "0":
+                    min_end = "00"
+                elif min_end == "5":
+                    min_end = "05"
+
+                if min_begin == "0":
+                    min_begin = "00"
+                elif min_begin == "5":
+                    min_begin = "05"
+                elif min_begin == "60":
+                    min_begin = "00"
+                    hour_begin = int(hour_begin) + 1
+                    if len(str(hour_begin)) == 1:
+                        hour_begin = "0" + str(hour_begin)
+                sheet_list.cell(row=no, column=no_sm).value = f"{hour_begin}:{min_begin}-{hour_end}:{min_end}"
+                no_sm += 1
+        no += 1
     for i in range(1, sheet_list.max_column + 1):
         for j in range(1, sheet_list.max_row + 1):
             sheet_list.cell(row=j, column=i).border = Border(top=thin, left=thin, right=thin, bottom=thin)
