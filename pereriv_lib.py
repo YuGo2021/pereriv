@@ -514,14 +514,23 @@ def get_grafik_oktel(sheet_per, sheet_list):
         hour_beg_temp = time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[0]
         if len(hour_beg_temp) == 1:
             hour_beg_temp = "0" + hour_beg_temp
+        #print(hour_beg_temp)
+        # hour_beg_temp = sheet_per.cell(row=4, column=kol).value
+        # if len(hour_beg_temp) == 4:
+        #     hour_beg_temp = "0" + hour_beg_temp
         hour_end_temp = time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[0]
         if len(hour_end_temp) == 1:
             hour_end_temp = "0" + hour_beg_temp
+        # hour_end_temp = sheet_per.cell(row=5, column=kol).value
+        # if len(hour_end_temp) == 4:
+        #     hour_beg_temp = "0" + hour_beg_temp
         sheet_list.cell(row=no,
                     column=2).value = f"{hour_beg_temp}:" \
                                       f"{time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[1]}-" \
                                       f"{hour_end_temp}:" \
                                       f"{time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[1]}"
+        #sheet_list.cell(row=no, column=2).value = hour_beg_temp + "-" + hour_end_temp
+        #print(sheet_list.cell(row=no, column=2).value)
         per_berin = 10
         per_end = 10
         no_sm = 3
