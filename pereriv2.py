@@ -4,7 +4,7 @@ import openpyxl
 from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter, column_index_from_string
 from openpyxl.styles import Border, Side
-
+from tqdm import tqdm
 
 def fio(fio_cell):
     # преобразование ФИО в Ф И.О.
@@ -346,140 +346,145 @@ for i in range(1, sheet_rez.max_column + 1):
             sheet_rez.cell(row=z, column=i).border = Border(top=medium, left=thin, right=thin, bottom=thin)
 
 # счтываем время начала, окончания и время перерывов и расставляем время
-for g in range(4, sheet_rez.max_column + 1):
-    time_per = str(sheet_rez.cell(row=8, column=g).value)
-    # print(time_per)
-    # проверяем ячейки со временем, которые полсе изменения могли поменять тип данных
-    #     if type(sheet_rez.cell(row = 4, column = g).value) == dt.time:
-    #         time_start = sheet_rez.cell(row = 4, column = g).value.strftime("%H:%M")
-    #         if time_start[0] == "0":
-    #             time_start = time_start[1:]
-    #     else:
-    #         time_start = str(sheet_rez.cell(row = 4, column = g).value)
-    if type(sheet_rez.cell(row=4, column=g).value) == dt.time:
-        sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value.strftime("%H:%M")
-        if sheet_rez.cell(row=4, column=g).value[0] == "0":
-            sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
-        if sheet_rez.cell(row=4, column=g).value[:-1] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
-            if round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(1, 60):
-                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + str(
-                    round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
-            elif round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(0, 6):
-                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + \
-                                                        str(round(
-                                                            int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10) \
-                                                        + "0"
-            else:
-                sheet_rez.cell(row=4, column=g).value = str(
-                    int(time_shift(sheet_rez.cell(row=4, column=g).value)[0]) + 1) + ":00"
-    time_start = str(sheet_rez.cell(row=4, column=g).value)
-    # print(type(time_start))
-    # print(time_start)
-    if time_start is None:
-        break
-    # print(time_start)
-    #     if type(sheet_rez.cell(row = 5, column = g).value) == dt.time:
-    #         time_end = sheet_rez.cell(row = 5, column = g).value.strftime("%H:%M")
-    #         if time_end[0] == "0":
-    #             time_end = time_end[1:]
-    #     else:
-    #         time_end = str(sheet_rez.cell(row = 5, column = g).value)
-    if type(sheet_rez.cell(row=5, column=g).value) == dt.time:
-        sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value.strftime("%H:%M")
-        if sheet_rez.cell(row=5, column=g).value[0] == "0":
-            sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
-        if sheet_rez.cell(row=5, column=g).value[:-1] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
-            if round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(1, 60):
-                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + str(
-                    round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
-            elif round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(0, 6):
-                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + \
-                                                        str(round(
-                                                            int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10) \
-                                                        + "0"
-            else:
-                sheet_rez.cell(row=5, column=g).value = str(
-                    int(time_shift(sheet_rez.cell(row=5, column=g).value)[0]) + 1) + ":00"
-    time_end = str(sheet_rez.cell(row=5, column=g).value)
-    # print(time_end)
-    # закрашиваем шифты
-    i_shift_start = 10
-    i_shift_end = 0
-    for l in range(10, sheet_rez.max_row + 1):
-        # запоминаем строку с началом смены
-        if sheet_rez.cell(row=l, column=1).value is not None:
-            if shift(sheet_rez.cell(row=l, column=1).value)[0] == time_start:
-                i_shift_start = l
-                # print(i_shift_start)
-            elif int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[0])[0]) <= int(
-                    time_shift(time_start)[0]) < int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[1])[0]):
-                for e in range(l, l + 12):
-                    if time_shift(time_start)[1] == time_shift(sheet_rez.cell(row=e, column=2).value)[0]:
-                        i_shift_start = e
-                        # print(i_shift_start)
-        # запоминаем строку с концом смены
-        if sheet_rez.cell(row=l, column=1).value is not None:
-            if shift(sheet_rez.cell(row=l, column=1).value)[1] == time_end:
-                i_shift_end = l + 11
-                # print(i_shift_end)
-            elif int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[0])[0]) <= int(
-                    time_shift(time_end)[0]) < int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[1])[0]):
-                for e in range(l, l + 12):
-                    if time_shift(time_end)[1] == time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
-                        i_shift_end = e
-
-                    elif time_shift(time_end)[1] > time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
-                        i_shift_end = e
-                        # print(i_shift_end)
-    print(sheet_rez.cell(row=2, column=g).value)
-    # print(i_shift_start)
-    # print(i_shift_end)
-    # закрашиваем смену
-    for z in range(i_shift_start, i_shift_end + 1):
-        sheet_rez.cell(row=z, column=g).fill = greenFill
-
-    # расставляем перерывы
-    # print(pereriv[time_per])
-    len_per = 0
-    if isinstance(pereriv[time_per], list):
-        len_per = len(pereriv[time_per])
-    elif time_per == 0:
-        len_per = 0
-    else:
-        len_per = 1
-    # for i_p in range(len_per):
-    # print(len_per)
-    if len_per > 1:
-        break_time = int((i_shift_end + 1 - i_shift_start) / (len_per + 1))
-
-        i_p = 0
-        for w in range(i_shift_start + break_time, i_shift_end - pereriv[time_per][-1], break_time):
-            break_line = w
-            break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
-            for break_lines in range(w - 6, w + 6 + 1):  # - pereriv[time_per][i_p]
-                if break_sum > sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez):
-                    break_line = break_lines
-                    break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
-                elif break_sum == sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez) and abs(
-                        w - break_lines) < abs(w - break_line):
-                    break_line = break_lines
-                    break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
-            # print(break_line)
-            for ii_p in range(pereriv[time_per][i_p]):
-                # print(ii_p)
-                sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
-                sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
-            i_p += 1
-    elif len_per == 1:
-        break_time = int((i_shift_end + 1 - i_shift_start) / 2)
-        for ij_p in range(pereriv[time_per]):
-            sheet_rez.cell(row=i_shift_start + break_time + ij_p, column=g).value = 5
-            sheet_rez.cell(row=i_shift_start + break_time + ij_p, column=g).fill = yellowFill
-
 try:
-    wb_rez.save(f"перерывы_сборка.xlsx")
-    input("Перерывы расставлены. Открываем файл перерывы_сборка.xlsx и проверяем. Нажмите ENTER для продолжения...")
-except OSError:
-    input(
-        "Невозможно сохранить данные. Закройте файл перерывы_сборка.xlsx "
-        "и запустите программу заново. Нажмите ENTER для продолжения...")
+    for g in tqdm(range(4, sheet_rez.max_column + 1), desc="Расставляем перерывы: ", unit=" ФИО",dynamic_ncols=True):
+        time_per = str(sheet_rez.cell(row=8, column=g).value)
+        # print(time_per)
+        # проверяем ячейки со временем, которые полсе изменения могли поменять тип данных
+        #     if type(sheet_rez.cell(row = 4, column = g).value) == dt.time:
+        #         time_start = sheet_rez.cell(row = 4, column = g).value.strftime("%H:%M")
+        #         if time_start[0] == "0":
+        #             time_start = time_start[1:]
+        #     else:
+        #         time_start = str(sheet_rez.cell(row = 4, column = g).value)
+        if type(sheet_rez.cell(row=4, column=g).value) == dt.time:
+            sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value.strftime("%H:%M")
+            if sheet_rez.cell(row=4, column=g).value[0] == "0":
+                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
+            if sheet_rez.cell(row=4, column=g).value[:-1] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
+                if round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(1, 60):
+                    sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + str(
+                        round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
+                elif round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(0, 6):
+                    sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + \
+                                                            str(round(
+                                                                int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10) \
+                                                            + "0"
+                else:
+                    sheet_rez.cell(row=4, column=g).value = str(
+                        int(time_shift(sheet_rez.cell(row=4, column=g).value)[0]) + 1) + ":00"
+        time_start = str(sheet_rez.cell(row=4, column=g).value)
+        # print(type(time_start))
+        # print(time_start)
+        if time_start is None:
+            break
+        # print(time_start)
+        #     if type(sheet_rez.cell(row = 5, column = g).value) == dt.time:
+        #         time_end = sheet_rez.cell(row = 5, column = g).value.strftime("%H:%M")
+        #         if time_end[0] == "0":
+        #             time_end = time_end[1:]
+        #     else:
+        #         time_end = str(sheet_rez.cell(row = 5, column = g).value)
+        if type(sheet_rez.cell(row=5, column=g).value) == dt.time:
+            sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value.strftime("%H:%M")
+            if sheet_rez.cell(row=5, column=g).value[0] == "0":
+                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
+            if sheet_rez.cell(row=5, column=g).value[:-1] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
+                if round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(1, 60):
+                    sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + str(
+                        round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
+                elif round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(0, 6):
+                    sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + \
+                                                            str(round(
+                                                                int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10) \
+                                                            + "0"
+                else:
+                    sheet_rez.cell(row=5, column=g).value = str(
+                        int(time_shift(sheet_rez.cell(row=5, column=g).value)[0]) + 1) + ":00"
+        time_end = str(sheet_rez.cell(row=5, column=g).value)
+        # print(time_end)
+        # закрашиваем шифты
+        i_shift_start = 10
+        i_shift_end = 0
+        for l in range(10, sheet_rez.max_row + 1):
+            # запоминаем строку с началом смены
+            if sheet_rez.cell(row=l, column=1).value is not None:
+                if shift(sheet_rez.cell(row=l, column=1).value)[0] == time_start:
+                    i_shift_start = l
+                    # print(i_shift_start)
+                elif int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[0])[0]) <= int(
+                        time_shift(time_start)[0]) < int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[1])[0]):
+                    for e in range(l, l + 12):
+                        if time_shift(time_start)[1] == time_shift(sheet_rez.cell(row=e, column=2).value)[0]:
+                            i_shift_start = e
+                            # print(i_shift_start)
+            # запоминаем строку с концом смены
+            if sheet_rez.cell(row=l, column=1).value is not None:
+                if shift(sheet_rez.cell(row=l, column=1).value)[1] == time_end:
+                    i_shift_end = l + 11
+                    # print(i_shift_end)
+                elif int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[0])[0]) <= int(
+                        time_shift(time_end)[0]) < int(time_shift(shift(sheet_rez.cell(row=l, column=1).value)[1])[0]):
+                    for e in range(l, l + 12):
+                        if time_shift(time_end)[1] == time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
+                            i_shift_end = e
+
+                        elif time_shift(time_end)[1] > time_shift(sheet_rez.cell(row=e, column=2).value)[1]:
+                            i_shift_end = e
+                            # print(i_shift_end)
+        #print(sheet_rez.cell(row=2, column=g).value)
+        # print(i_shift_start)
+        # print(i_shift_end)
+        # закрашиваем смену
+        for z in range(i_shift_start, i_shift_end + 1):
+            sheet_rez.cell(row=z, column=g).fill = greenFill
+
+        # расставляем перерывы
+        # print(pereriv[time_per])
+        len_per = 0
+        if isinstance(pereriv[time_per], list):
+            len_per = len(pereriv[time_per])
+        elif time_per == 0:
+            len_per = 0
+        else:
+            len_per = 1
+        # for i_p in range(len_per):
+        # print(len_per)
+        if len_per > 1:
+            break_time = int((i_shift_end + 1 - i_shift_start) / (len_per + 1))
+
+            i_p = 0
+            for w in range(i_shift_start + break_time, i_shift_end - pereriv[time_per][-1], break_time):
+                break_line = w
+                break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
+                for break_lines in range(w - 6, w + 6 + 1):  # - pereriv[time_per][i_p]
+                    if break_sum > sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez):
+                        break_line = break_lines
+                        break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+                    elif break_sum == sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez) and abs(
+                            w - break_lines) < abs(w - break_line):
+                        break_line = break_lines
+                        break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+                # print(break_line)
+                for ii_p in range(pereriv[time_per][i_p]):
+                    # print(ii_p)
+                    sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
+                    sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
+                i_p += 1
+        elif len_per == 1:
+            break_time = int((i_shift_end + 1 - i_shift_start) / 2)
+            for ij_p in range(pereriv[time_per]):
+                sheet_rez.cell(row=i_shift_start + break_time + ij_p, column=g).value = 5
+                sheet_rez.cell(row=i_shift_start + break_time + ij_p, column=g).fill = yellowFill
+    try:
+        wb_rez.save(f"перерывы_сборка.xlsx")
+        input("Перерывы расставлены. Открываем файл перерывы_сборка.xlsx и проверяем. Нажмите ENTER для продолжения...")
+    except OSError:
+        input(
+            "Невозможно сохранить данные. Закройте файл перерывы_сборка.xlsx "
+            "и запустите программу заново. Нажмите ENTER для продолжения...")
+
+except Exception as err:
+    print(err)
+    input(f"ОШИБКА!!! Проверьте в перерыв_сборка данные по оператору {sheet_rez.cell(row=2, column=g).value}. Нажмите ENTER для продолжения...")
+

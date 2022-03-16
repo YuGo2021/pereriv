@@ -4,7 +4,7 @@ import openpyxl
 from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter, column_index_from_string
 from openpyxl.styles import Border, Side
-
+import os
 
 def fio(fio_cell):
     # преобразование ФИО в Ф И.О.
@@ -284,107 +284,113 @@ def pereriv_CC(sheet_grafik, i_op1, sheet_rez1, CC_name):
     if i_op1 < 4:
         i_op1 = 4
 
-
-    if i_5_2 > 0:
-        for k in range(i_5_2 + 1, i_2_2 - 3):
-            if sheet_grafik.cell(row=k, column=4).value is not None \
-                    and sheet_grafik.cell(row=k, column=6).value is not None \
-                    and sheet_grafik.cell(row=k, column=5).value is not None \
-                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
-                sheet_grafik.cell(row=k, column=9).value) == float or type(
-                sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
-                sheet_grafik.cell(row=k + 1, column=9).value) == float):
-                oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
-                print(oper)
-                sheet_rez1.cell(row=1, column=i_op1).value = CC_name
-                sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
-                sheet_rez1.cell(row=3, column=i_op1).value = "5/2"
-                if CC_name == "НСК":
-                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
-                # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
-                else:
-                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
-                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
-
-                # print(shift(sheet_grafik.cell(row = k, column = 5).value)[1])
-                sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[3]
-                sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[4]
-                sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[5]
-                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
-                    sheet_rez1.cell(row=8, column=i_op1).fill = redFill
-                sheet_rez1.cell(row=9,
-                                column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
-                # if sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is not None:
-                #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value + sheet_grafik.cell(row = k+1, column = 9).value
-                # elif sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is None:
-                #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value
-                # else:
-                #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k+1, column = 9).value
-
-                i_op1 += 1
-    if i_2_2 > 0:
-
-        for k in range(i_2_2 + 1, i_1_2 - 3):
-            if sheet_grafik.cell(row=k, column=4).value is not None \
-                    and sheet_grafik.cell(row=k, column=6).value is not None \
-                    and sheet_grafik.cell(row=k, column=5).value is not None \
-                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+    try:
+        if i_5_2 > 0:
+            for k in range(i_5_2 + 1, i_2_2 - 3):
+                if sheet_grafik.cell(row=k, column=4).value is not None \
+                        and sheet_grafik.cell(row=k, column=6).value is not None \
+                        and sheet_grafik.cell(row=k, column=5).value is not None \
+                        and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
                     sheet_grafik.cell(row=k, column=9).value) == float or type(
                     sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
                     sheet_grafik.cell(row=k + 1, column=9).value) == float):
-                oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
-                print(oper)
-                sheet_rez1.cell(row=1, column=i_op1).value = CC_name
-                sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
-                sheet_rez1.cell(row=3, column=i_op1).value = "2/2"
-                if CC_name == "НСК":
-                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
+                    oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
+                    print(oper)
+                    sheet_rez1.cell(row=1, column=i_op1).value = CC_name
+                    sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
+                    sheet_rez1.cell(row=3, column=i_op1).value = "5/2"
+                    if CC_name == "НСК":
+                        sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
                     # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
-                else:
-                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
-                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
-                sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[3]
-                sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[4]
-                sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[5]
-                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
-                    sheet_rez1.cell(row=8, column=i_op1).fill = redFill
-                sheet_rez1.cell(row=9,
-                                column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
-                i_op1 += 1
-    if i_1_2 > 0:
-        for k in range(i_1_2 + 1, sheet_grafik.max_row + 1):
-            if sheet_grafik.cell(row=k, column=4).value is not None \
-                    and sheet_grafik.cell(row=k, column=6).value is not None \
-                    and sheet_grafik.cell(row=k, column=5).value is not None \
-                    and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
-                sheet_grafik.cell(row=k, column=9).value) == float or type(
-                sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
-                sheet_grafik.cell(row=k + 1, column=9).value) == float):
-                oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
-                print(oper)
-                sheet_rez1.cell(row=1, column=i_op1).value = CC_name
-                sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
-                sheet_rez1.cell(row=3, column=i_op1).value = "1/2"
-                if CC_name == "НСК":
-                    sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
-                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
-                else:
-                    sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
-                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
-                    sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
-                sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[3]
-                sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[4]
-                sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[5]
-                if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
-                    sheet_rez1.cell(row=8, column=i_op1).fill = redFill
-                sheet_rez1.cell(row=9,
-                                column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
-                i_op1 += 1
+                        sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                    else:
+                        sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                        # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                        sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+
+                    # print(shift(sheet_grafik.cell(row = k, column = 5).value)[1])
+                    sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[3]
+                    sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[4]
+                    sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "5/2")[5]
+                    if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                        sheet_rez1.cell(row=8, column=i_op1).fill = redFill
+                    sheet_rez1.cell(row=9,
+                                    column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                    # if sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is not None:
+                    #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value + sheet_grafik.cell(row = k+1, column = 9).value
+                    # elif sheet_grafik.cell(row = k, column = 9).value is not None and sheet_grafik.cell(row = k+1, column = 9).value is None:
+                    #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k, column = 9).value
+                    # else:
+                    #   sheet_rez1.cell(row = 6, column = i_op1).value = sheet_grafik.cell(row = k+1, column = 9).value
+
+                    i_op1 += 1
+        if i_2_2 > 0:
+
+            for k in range(i_2_2 + 1, i_1_2 - 3):
+                if sheet_grafik.cell(row=k, column=4).value is not None \
+                        and sheet_grafik.cell(row=k, column=6).value is not None \
+                        and sheet_grafik.cell(row=k, column=5).value is not None \
+                        and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+                        sheet_grafik.cell(row=k, column=9).value) == float or type(
+                        sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
+                        sheet_grafik.cell(row=k + 1, column=9).value) == float):
+                    oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
+                    print(oper)
+                    sheet_rez1.cell(row=1, column=i_op1).value = CC_name
+                    sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
+                    sheet_rez1.cell(row=3, column=i_op1).value = "2/2"
+                    if CC_name == "НСК":
+                        sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
+                        # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                        sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                    else:
+                        sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                        # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                        sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+                    sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[3]
+                    sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[4]
+                    sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "2/2")[5]
+                    if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                        sheet_rez1.cell(row=8, column=i_op1).fill = redFill
+                    sheet_rez1.cell(row=9,
+                                    column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                    i_op1 += 1
+        if i_1_2 > 0:
+            for k in range(i_1_2 + 1, sheet_grafik.max_row + 1):
+                if sheet_grafik.cell(row=k, column=4).value is not None \
+                        and sheet_grafik.cell(row=k, column=6).value is not None \
+                        and sheet_grafik.cell(row=k, column=5).value is not None \
+                        and (type(sheet_grafik.cell(row=k, column=9).value) == int or type(
+                    sheet_grafik.cell(row=k, column=9).value) == float or type(
+                    sheet_grafik.cell(row=k + 1, column=9).value) == int or type(
+                    sheet_grafik.cell(row=k + 1, column=9).value) == float):
+                    oper = fio_full(sheet_grafik.cell(row=k, column=6).value)
+                    print(oper)
+                    sheet_rez1.cell(row=1, column=i_op1).value = CC_name
+                    sheet_rez1.cell(row=2, column=i_op1).value = fio(oper)
+                    sheet_rez1.cell(row=3, column=i_op1).value = "1/2"
+                    if CC_name == "НСК":
+                        sheet_rez1.cell(row=4, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[0])
+                        # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                        sheet_rez1.cell(row=5, column=i_op1).value = nsk(shift(sheet_grafik.cell(row=k, column=5).value)[1])
+                    else:
+                        sheet_rez1.cell(row=4, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[0]
+                        # print(shift(sheet_grafik.cell(row = k, column = 5).value)[0])
+                        sheet_rez1.cell(row=5, column=i_op1).value = shift(sheet_grafik.cell(row=k, column=5).value)[1]
+                    sheet_rez1.cell(row=6, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[3]
+                    sheet_rez1.cell(row=7, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[4]
+                    sheet_rez1.cell(row=8, column=i_op1).value = find_cell(k, sheet_grafik, CC_name, "1/2")[5]
+                    if find_cell(k, sheet_grafik, CC_name, "5/2")[7] == 1:
+                        sheet_rez1.cell(row=8, column=i_op1).fill = redFill
+                    sheet_rez1.cell(row=9,
+                                    column=i_op1).value = f"=SUM({get_column_letter(i_op1)}10:{get_column_letter(i_op1)}273)"
+                    i_op1 += 1
+    except Exception as err:
+        print(err)
+        input(
+            f"ОШИБКА!!! Проверьте в графике {CC_name} данные по оператору {oper}. Нажмите ENTER для продолжения...")
+        os._exit(0)
+
     return sheet_rez1, i_op1
 
 
@@ -511,16 +517,22 @@ def get_grafik_oktel(sheet_per, sheet_list):
     for kol in range(4, sheet_per.max_column + 1):
         sheet_list.cell(row=no, column=1).value = sheet_per.cell(row=2, column=kol).value
         CC_name = sheet_per.cell(row=1, column=kol).value
-        hour_beg_temp = time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[0]
+        if CC_name == "НСК":
+            hour_beg_temp = str(int(time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[0]))
+        else:
+            hour_beg_temp = time_shift(time_chek(sheet_per.cell(row=4, column=kol).value))[0]
         if len(hour_beg_temp) == 1:
             hour_beg_temp = "0" + hour_beg_temp
         #print(hour_beg_temp)
         # hour_beg_temp = sheet_per.cell(row=4, column=kol).value
         # if len(hour_beg_temp) == 4:
         #     hour_beg_temp = "0" + hour_beg_temp
-        hour_end_temp = time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[0]
+        if CC_name == "НСК":
+            hour_end_temp = str(int(time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[0]))
+        else:
+            hour_end_temp = time_shift(time_chek(sheet_per.cell(row=5, column=kol).value))[0]
         if len(hour_end_temp) == 1:
-            hour_end_temp = "0" + hour_beg_temp
+            hour_end_temp = "0" + hour_end_temp
         # hour_end_temp = sheet_per.cell(row=5, column=kol).value
         # if len(hour_end_temp) == 4:
         #     hour_beg_temp = "0" + hour_beg_temp

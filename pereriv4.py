@@ -123,9 +123,16 @@ try:
     except OSError:
         input(f"Невозможно сохранить данные. Закройте файл user{tomorrow_str}.xlsx на сетевом диске \\\\SW-OKTEL-DB-03\Grafic и "
               "запустите программу заново. Нажмите ENTER для продолжения...")
+    except FileNotFoundError:
+        input(f"Невозможно получить доступ к сетевому диску \\\\SW-OKTEL-DB-03\Grafic. Нажмите ENTER для продолжения...")
+
 except OSError:
-    shutil.copyfile(f"user{tomorrow_str}.xlsx", f"\\\\SW-OKTEL-DB-03\\Grafic\\user{tomorrow_str}.xlsx")
-    input(f"Файл скопирован  в сетевую директорию \\\\SW-OKTEL-DB-03\\Grafic\\user{tomorrow_str}.xlsx. "
-          f"Нажмите ENTER для продолжения...")
+    try:
+        shutil.copyfile(f"user{tomorrow_str}.xlsx", f"\\\\SW-OKTEL-DB-03\\Grafic\\user{tomorrow_str}.xlsx")
+        input(f"Файл скопирован  в сетевую директорию \\\\SW-OKTEL-DB-03\\Grafic\\user{tomorrow_str}.xlsx. "
+              f"Нажмите ENTER для продолжения...")
+    except FileNotFoundError:
+        input(
+            f"Невозможно получить доступ к сетевому диску \\\\SW-OKTEL-DB-03\Grafic. Нажмите ENTER для продолжения...")
 
 
