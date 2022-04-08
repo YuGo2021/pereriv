@@ -359,20 +359,31 @@ try:
         #         time_start = str(sheet_rez.cell(row = 4, column = g).value)
         if type(sheet_rez.cell(row=4, column=g).value) == dt.time:
             sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value.strftime("%H:%M")
-            if sheet_rez.cell(row=4, column=g).value[0] == "0":
-                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
-            if sheet_rez.cell(row=4, column=g).value[:-1] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
-                if round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(1, 60):
-                    sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + str(
-                        round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
-                elif round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(0, 6):
-                    sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + \
-                                                            str(round(
-                                                                int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10) \
-                                                            + "0"
-                else:
-                    sheet_rez.cell(row=4, column=g).value = str(
-                        int(time_shift(sheet_rez.cell(row=4, column=g).value)[0]) + 1) + ":00"
+        if sheet_rez.cell(row=4, column=g).value[0] == "0":
+            sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
+        if sheet_rez.cell(row=4, column=g).value[-1:] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
+            temp_range = str(round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
+            if temp_range in range(10, 51):
+                sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + temp_range
+            elif int(temp_range) == 60:
+                sheet_rez.cell(row=4, column=g).value = f'{int(sheet_rez.cell(row=4, column=g).value[:-3]) + 1}:00'
+            elif int(temp_range) == 0:
+                sheet_rez.cell(row=4, column=g).value = f'{sheet_rez.cell(row=4, column=g).value[:-2]}0{temp_range}'
+
+            # if sheet_rez.cell(row=4, column=g).value[0] == "0":
+            #     sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[1:]
+            # if sheet_rez.cell(row=4, column=g).value[:-1] != "0" or sheet_rez.cell(row=4, column=g).value[-1:] != "5":
+            #     if round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(1, 60):
+            #         sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + str(
+            #             round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10)
+            #     elif round(int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10 in range(0, 6):
+            #         sheet_rez.cell(row=4, column=g).value = sheet_rez.cell(row=4, column=g).value[:-2] + \
+            #                                                 str(round(
+            #                                                     int(sheet_rez.cell(column=g, row=4).value[-2:]) / 10) * 10) \
+            #                                                 + "0"
+            #     else:
+            #         sheet_rez.cell(row=4, column=g).value = str(
+            #             int(time_shift(sheet_rez.cell(row=4, column=g).value)[0]) + 1) + ":00"
         time_start = str(sheet_rez.cell(row=4, column=g).value)
         # print(type(time_start))
         # print(time_start)
@@ -387,20 +398,31 @@ try:
         #         time_end = str(sheet_rez.cell(row = 5, column = g).value)
         if type(sheet_rez.cell(row=5, column=g).value) == dt.time:
             sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value.strftime("%H:%M")
-            if sheet_rez.cell(row=5, column=g).value[0] == "0":
-                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
-            if sheet_rez.cell(row=5, column=g).value[:-1] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
-                if round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(1, 60):
-                    sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + str(
-                        round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
-                elif round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(0, 6):
-                    sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + \
-                                                            str(round(
-                                                                int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10) \
-                                                            + "0"
-                else:
-                    sheet_rez.cell(row=5, column=g).value = str(
-                        int(time_shift(sheet_rez.cell(row=5, column=g).value)[0]) + 1) + ":00"
+        if sheet_rez.cell(row=5, column=g).value[0] == "0":
+            sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
+        if sheet_rez.cell(row=5, column=g).value[-1:] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
+            temp_range = str(round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
+
+            if int(temp_range) in range(10, 51):
+                sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + temp_range
+            elif int(temp_range) == 60:
+                sheet_rez.cell(row=5, column=g).value = f'{int(sheet_rez.cell(row=5, column=g).value[:-3]) + 1}:00'
+            elif int(temp_range) == 0:
+                sheet_rez.cell(row=5, column=g).value = f'{sheet_rez.cell(row=5, column=g).value[:-2]}0{temp_range}'
+            # if sheet_rez.cell(row=5, column=g).value[0] == "0":
+            #     sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[1:]
+            # if sheet_rez.cell(row=5, column=g).value[:-1] != "0" or sheet_rez.cell(row=5, column=g).value[-1:] != "5":
+            #     if round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(1, 60):
+            #         sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + str(
+            #             round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10)
+            #     elif round(int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10 in range(0, 6):
+            #         sheet_rez.cell(row=5, column=g).value = sheet_rez.cell(row=5, column=g).value[:-2] + \
+            #                                                 str(round(
+            #                                                     int(sheet_rez.cell(column=g, row=5).value[-2:]) / 10) * 10) \
+            #                                                 + "0"
+            #     else:
+            #         sheet_rez.cell(row=5, column=g).value = str(
+            #             int(time_shift(sheet_rez.cell(row=5, column=g).value)[0]) + 1) + ":00"
         time_end = str(sheet_rez.cell(row=5, column=g).value)
         # print(time_end)
         # закрашиваем шифты
