@@ -24,7 +24,7 @@ for s in range(len(wb_oper.sheetnames)):
 print("Готовим таблицы для рассылки...")
 sheet_per = wb_grafik_per.active
 sheet_oper = wb_oper.active
-
+y
 sheet_sm = per.new_sheet_oktel(wb_grafik_per, "Лист1")
 
 # формируем рассылку для Октел
