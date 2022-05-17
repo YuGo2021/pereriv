@@ -2,10 +2,9 @@ import re
 import datetime as dt
 import openpyxl
 from openpyxl.styles import PatternFill
-from openpyxl.utils import get_column_letter, column_index_from_string
+from openpyxl.utils import get_column_letter
 from openpyxl.styles import Border, Side
 from tqdm import tqdm
-import math
 
 
 def fio(fio_cell):
@@ -673,15 +672,8 @@ try:
                         len_per2 = 0
                         len_per1 -= 1
                     sheet_rez,  i_lunch_next = set_pereriv(sheet_rez, len_per1, time_per, shift_beg1, shift_end1, 0,lunch_30)
-                    #i_lunch_next = set_pereriv(sheet_rez, len_per1, time_per, shift_beg1, shift_end1, 0,lunch_30)[1]
                     sheet_rez = set_pereriv(sheet_rez, len_per2, time_per, shift_beg2, shift_end2, i_lunch_next, lunch_30)[0]
-                    # else:
-                    #     len_per2 = (len_per - 1) // 2
-                    #     len_per1 = len_per - 1 - len_per2
-                    #     sheet_rez, i_lunch_next = set_pereriv(sheet_rez, len_per1, time_per, shift_beg1, shift_end1, 0, lunch_30)
-                    #     #i_lunch_next = set_pereriv(sheet_rez, len_per1, time_per, shift_beg1, shift_end1, 0, lunch_30)[1]
-                    #     sheet_rez = \
-                    #     set_pereriv(sheet_rez, len_per2, time_per, shift_beg2, shift_end2, i_lunch_next, lunch_30)[0]
+
 
 
                     fix_count = 1
