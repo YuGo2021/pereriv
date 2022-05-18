@@ -363,7 +363,7 @@ def perviy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, 
         break_time = int((i_shift_end + 1 - i_end) / (len_per))
 
     i_p = 1
-    print(pereriv[time_per])
+    #print(pereriv[time_per])
     for w in range(i_end + break_time, i_shift_end - pereriv[time_per][-1], break_time):
         break_line = w
         break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
