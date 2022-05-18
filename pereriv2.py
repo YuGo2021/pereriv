@@ -345,6 +345,46 @@ def posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end):
 
     return sheet_rez
 
+
+def perviy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, i_fix):
+    start = shift(sheet_fix.cell(row=i_fix, column=4).value)[0]
+    stop = shift(sheet_fix.cell(row=i_fix, column=4).value)[1]
+    i_start = nachalo_konec(sheet_rez, start, stop)[0]
+    i_end = nachalo_konec(sheet_rez, start, stop)[1]
+    #print(start, stop, i_start, i_end)
+    for ii_p in range(pereriv[time_per][0]):
+        # print(ii_p)
+        sheet_rez.cell(row=i_start + ii_p, column=g).value = 5
+        sheet_rez.cell(row=i_start + ii_p, column=g).fill = yellowFill
+    #sheet_rez = shift_yellow(sheet_rez, g, i_shift_start, i_shift_end)
+
+
+    if len_per > 1:
+        break_time = int((i_shift_end + 1 - i_end) / (len_per))
+
+    i_p = 1
+    #print(pereriv[time_per])
+    for w in range(i_end + break_time, i_shift_end - pereriv[time_per][-1], break_time):
+        break_line = w
+        break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
+        for break_lines in range(w - 6, w + 6 + 1):  # - pereriv[time_per][i_p]
+            if break_sum > sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez):
+                break_line = break_lines
+                break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+            elif break_sum == sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez) and abs(
+                    w - break_lines) < abs(w - break_line):
+                break_line = break_lines
+                break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+        # print(break_line)
+        for ii_p in range(pereriv[time_per][i_p]):
+            # print(ii_p)
+            sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
+            sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
+        i_p += 1
+
+    return sheet_rez
+
+
 def nachalo_konec(sheet_rez, time_start, time_end):
     # закрашиваем шифты
     i_shift_start = 10
@@ -602,7 +642,7 @@ try:
         fix_count = 0
         for i_fix in range(1, sheet_fix.max_row + 1):
             if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=3).value:
-                if sheet_fix.cell(row=i_fix, column=2).value == "вместе":
+                if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=3).value)
                     for n_fix in range(4, g):
                         if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=1).value:
@@ -616,7 +656,7 @@ try:
                     break
 
             if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=1).value:
-                if sheet_fix.cell(row=i_fix, column=2).value == "вместе":
+                if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     for n_fix in range(4, g):
                         if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=3).value:
@@ -627,9 +667,9 @@ try:
                                     sheet_rez.cell(row=k_fix, column=g).fill = yellowFill
                             fix_count = 1
                     break
-                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс":
+                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс"and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
-                    for n_fix in range(3, sheet_fix.max_column + 1):
+                    for n_fix in range(4, sheet_fix.max_column + 1):
                         if sheet_fix.cell(row=i_fix, column=n_fix).value is not None:
                             start = shift(sheet_fix.cell(row=i_fix, column=n_fix).value)[0]
                             stop = shift(sheet_fix.cell(row=i_fix, column=n_fix).value)[1]
@@ -637,17 +677,23 @@ try:
                             #print(start, stop)
                     fix_count = 1
                     break
-                elif sheet_fix.cell(row=i_fix, column=2).value == "последний":
+                elif sheet_fix.cell(row=i_fix, column=2).value == "последний"and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     sheet_rez = posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end)
                             #print(start, stop)
                     fix_count = 1
                     break
-                elif sheet_fix.cell(row=i_fix, column=2).value == "обед":
+                elif sheet_fix.cell(row=i_fix, column=2).value == "первый" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
+                    #print(sheet_fix.cell(row=i_fix, column=1).value)
+                    sheet_rez = perviy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, i_fix)
+                            #print(start, stop)
+                    fix_count = 1
+                    break
+                elif sheet_fix.cell(row=i_fix, column=2).value == "обед" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     # закрашиваем обед
-                    start = shift(sheet_fix.cell(row=i_fix, column=3).value)[0]
-                    stop = shift(sheet_fix.cell(row=i_fix, column=3).value)[1]
+                    start = shift(sheet_fix.cell(row=i_fix, column=4).value)[0]
+                    stop = shift(sheet_fix.cell(row=i_fix, column=4).value)[1]
                     sheet_rez = shift_yellow(sheet_rez, g, start, stop)
                     # сравниваем начало смены и конец
                     shift_beg1 = nachalo_konec(sheet_rez, time_start, start)[0]
