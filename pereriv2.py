@@ -314,18 +314,53 @@ def set_pereriv(sheet_rez, len_per_set, time_per_set, i_shift_start_set, i_shift
             i_p += 1
     return sheet_rez, i_p
 
-def posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end):
-    for ii_p in range(pereriv[time_per][-1]):
-        # print(ii_p)
-        sheet_rez.cell(row=i_shift_end - ii_p, column=g).value = 5
-        sheet_rez.cell(row=i_shift_end - ii_p, column=g).fill = yellowFill
-    i_shift_end -= ii_p
+def posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, i_fix):
+    if sheet_fix.cell(row=i_fix, column=4).value is None:
+        for ii_p in range(pereriv[time_per][-1]):
+            # print(ii_p)
+            sheet_rez.cell(row=i_shift_end - ii_p, column=g).value = 5
+            sheet_rez.cell(row=i_shift_end - ii_p, column=g).fill = yellowFill
+        i_shift_end -= ii_p
 
-    if len_per > 1:
-        break_time = int((i_shift_end + 1 - i_shift_start) / (len_per))
+        if len_per > 1:
+            break_time = int((i_shift_end + 1 - i_shift_start) / (len_per))
+
+            i_p = 0
+            for w in range(i_shift_start + break_time, i_shift_end - pereriv[time_per][-2], break_time):
+                break_line = w
+                break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
+                for break_lines in range(w - 6, w + 6 + 1):  # - pereriv[time_per][i_p]
+                    if break_sum > sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez):
+                        break_line = break_lines
+                        break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+                    elif break_sum == sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez) and abs(
+                            w - break_lines) < abs(w - break_line):
+                        break_line = break_lines
+                        break_sum = sum_cell(break_lines, break_lines + pereriv[time_per][i_p], sheet_rez)
+                # print(break_line)
+                for ii_p in range(pereriv[time_per][i_p]):
+                    # print(ii_p)
+                    sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
+                    sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
+                i_p += 1
+    else:
+        start = shift(sheet_fix.cell(row=i_fix, column=4).value)[0]
+        stop = shift(sheet_fix.cell(row=i_fix, column=4).value)[1]
+        i_start = nachalo_konec(sheet_rez, start, stop)[0]
+        i_end = nachalo_konec(sheet_rez, start, stop)[1]
+        # print(start, stop, i_start, i_end)
+        for ii_p in range(pereriv[time_per][-1]):
+            # print(ii_p)
+            sheet_rez.cell(row=i_start + ii_p, column=g).value = 5
+            sheet_rez.cell(row=i_start + ii_p, column=g).fill = yellowFill
+        # sheet_rez = shift_yellow(sheet_rez, g, i_shift_start, i_shift_end)
+
+        if len_per > 1:
+            break_time = int((i_start - i_shift_start + 1) / (len_per))
 
         i_p = 0
-        for w in range(i_shift_start + break_time, i_shift_end - pereriv[time_per][-2], break_time):
+        # print(pereriv[time_per])
+        for w in range(i_shift_start + break_time, i_start - pereriv[time_per][-2], break_time):
             break_line = w
             break_sum = sum_cell(w, w + pereriv[time_per][i_p], sheet_rez)
             for break_lines in range(w - 6, w + 6 + 1):  # - pereriv[time_per][i_p]
@@ -679,7 +714,7 @@ try:
                     break
                 elif sheet_fix.cell(row=i_fix, column=2).value == "последний"and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
-                    sheet_rez = posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end)
+                    sheet_rez = posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, i_fix)
                             #print(start, stop)
                     fix_count = 1
                     break

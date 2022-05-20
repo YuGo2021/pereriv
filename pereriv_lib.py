@@ -203,6 +203,9 @@ def find_cell(k, sheet, CC_name, shift):
         elif 6 < n6 < 8:
             n7 = 60
             color = 1
+        elif 0 <= n6 < 3:
+            n7 = 0
+            color = 1
         else:
             n7 = ""
             color = 1
@@ -229,6 +232,9 @@ def find_cell(k, sheet, CC_name, shift):
 
         elif 6 < n6 < 8:
             n7 = 60
+
+        elif 0 <= n6 < 3:
+            n7 = 0
 
         else:
             n7 = ""
