@@ -348,12 +348,40 @@ def posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fi
         stop = shift(sheet_fix.cell(row=i_fix, column=4).value)[1]
         i_start = nachalo_konec(sheet_rez, start, stop)[0]
         i_end = nachalo_konec(sheet_rez, start, stop)[1]
-        # print(start, stop, i_start, i_end)
-        for ii_p in range(pereriv[time_per][-1]):
-            # print(ii_p)
-            sheet_rez.cell(row=i_start + ii_p, column=g).value = 5
-            sheet_rez.cell(row=i_start + ii_p, column=g).fill = yellowFill
-        # sheet_rez = shift_yellow(sheet_rez, g, i_shift_start, i_shift_end)
+
+        per_count = 0
+        for ii_p in range(i_start, i_end + 1):
+            sheet_rez.cell(row=ii_p, column=g).value = 5
+            sheet_rez.cell(row=ii_p, column=g).fill = yellowFill
+            per_count += 1
+        per_temp = pereriv[time_per]
+        # сравниваем последний перерыв из фикса со стандартным перерывом и меняем остальные смены если не совпадает
+        if pereriv[time_per][-1] < per_count:
+            new_per_set = []
+            length_per = len(pereriv[time_per])
+            for _ in range(length_per - 1):
+                new_per_set.append(pereriv[time_per][_])
+            new_per_set.append(per_count)
+            i_cycle = 0
+            while sum(new_per_set) != sum(pereriv[time_per]):
+                if new_per_set[i_cycle] > 2:
+                    new_per_set[i_cycle] -= 1
+                i_cycle = 0 if i_cycle + 1 == length_per - 1 else i_cycle + 1
+            pereriv[time_per] = new_per_set
+        elif pereriv[time_per][-1] > per_count:
+            new_per_set = []
+            length_per = len(pereriv[time_per])
+            for _ in range(length_per - 1):
+                new_per_set.append(pereriv[time_per][_])
+            new_per_set.append(per_count)
+            i_cycle = 0
+
+            while sum(new_per_set) != sum(pereriv[time_per]):
+                if new_per_set[i_cycle] > 2:
+                    new_per_set[i_cycle] += 1
+                i_cycle = 0 if i_cycle + 1 == length_per - 1 else i_cycle + 1
+            pereriv[time_per] = new_per_set
+
 
         if len_per > 1:
             break_time = int((i_start - i_shift_start + 1) / (len_per))
@@ -377,7 +405,7 @@ def posledniy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fi
                 sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
                 sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
             i_p += 1
-
+        pereriv[time_per] = per_temp
     return sheet_rez
 
 
@@ -386,12 +414,41 @@ def perviy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, 
     stop = shift(sheet_fix.cell(row=i_fix, column=4).value)[1]
     i_start = nachalo_konec(sheet_rez, start, stop)[0]
     i_end = nachalo_konec(sheet_rez, start, stop)[1]
-    #print(start, stop, i_start, i_end)
-    for ii_p in range(pereriv[time_per][0]):
-        # print(ii_p)
-        sheet_rez.cell(row=i_start + ii_p, column=g).value = 5
-        sheet_rez.cell(row=i_start + ii_p, column=g).fill = yellowFill
-    #sheet_rez = shift_yellow(sheet_rez, g, i_shift_start, i_shift_end)
+
+    per_count = 0
+    for ii_p in range(i_start, i_end + 1):
+        sheet_rez.cell(row=ii_p, column=g).value = 5
+        sheet_rez.cell(row=ii_p, column=g).fill = yellowFill
+        per_count += 1
+
+    # сравниваем первый перерыв из фикса со стандартным перерывом и меняем остальные смены если не совпадает
+    per_temp = pereriv[time_per]
+    if pereriv[time_per][0] < per_count:
+        new_per_set = []
+        new_per_set.append(per_count)
+        length_per = len(pereriv[time_per])
+        for _ in range(1, length_per):
+            new_per_set.append(pereriv[time_per][_])
+        i_cycle = 1
+        while sum(new_per_set) != sum(pereriv[time_per]):
+            if new_per_set[i_cycle] > 2:
+                new_per_set[i_cycle] -= 1
+            i_cycle = 1 if i_cycle + 1 == length_per else i_cycle + 1
+        pereriv[time_per] = new_per_set
+    elif pereriv[time_per][0] > per_count:
+        new_per_set = []
+        new_per_set.append(per_count)
+        length_per = len(pereriv[time_per])
+        for _ in range(1, length_per):
+            new_per_set.append(pereriv[time_per][_])
+
+        i_cycle = 1
+
+        while sum(new_per_set) != sum(pereriv[time_per]):
+            if new_per_set[i_cycle] > 2:
+                new_per_set[i_cycle] += 1
+            i_cycle = 1 if i_cycle + 1 == length_per else i_cycle + 1
+        pereriv[time_per] = new_per_set
 
 
     if len_per > 1:
@@ -416,7 +473,7 @@ def perviy(sheet_rez, len_per, time_per, i_shift_start, i_shift_end, sheet_fix, 
             sheet_rez.cell(row=break_line + ii_p, column=g).value = 5
             sheet_rez.cell(row=break_line + ii_p, column=g).fill = yellowFill
         i_p += 1
-
+    pereriv[time_per] = per_temp
     return sheet_rez
 
 
