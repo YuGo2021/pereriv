@@ -641,7 +641,7 @@ try:
         # проверяем файл фикс
         fix_count = 0
         for i_fix in range(1, sheet_fix.max_row + 1):
-            if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=3).value:
+            if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=4).value:
                 if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=3).value)
                     for n_fix in range(4, g):
