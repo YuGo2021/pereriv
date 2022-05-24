@@ -751,7 +751,7 @@ try:
                 if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     for n_fix in range(4, g):
-                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=3).value:
+                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=4).value:
                             for k_fix in range(10, sheet_rez.max_row + 1):
                                 sheet_rez.cell(row=k_fix, column=g).value = sheet_rez.cell(row=k_fix,
                                                                                            column=n_fix).value
@@ -759,7 +759,7 @@ try:
                                     sheet_rez.cell(row=k_fix, column=g).fill = yellowFill
                             fix_count = 1
                     break
-                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс"and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
+                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс"and sheet_fix.cell(row=i_fix, column=4).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     for n_fix in range(4, sheet_fix.max_column + 1):
                         if sheet_fix.cell(row=i_fix, column=n_fix).value is not None:
