@@ -759,7 +759,7 @@ try:
                                     sheet_rez.cell(row=k_fix, column=g).fill = yellowFill
                             fix_count = 1
                     break
-                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс"and sheet_fix.cell(row=i_fix, column=4).value == sheet_rez.cell(row=7, column=g).value:
+                elif sheet_fix.cell(row=i_fix, column=2).value == "фикс"and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     for n_fix in range(4, sheet_fix.max_column + 1):
                         if sheet_fix.cell(row=i_fix, column=n_fix).value is not None:

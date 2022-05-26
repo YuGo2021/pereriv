@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="260858d6-0431-48ed-885e-90f82fe6bde7" name="Changes" comment="Добавлены:&#10;1) первый перерыв&#10;2) произвольные перерывы, если смена не по графику">
+    <list default="true" id="260858d6-0431-48ed-885e-90f82fe6bde7" name="Changes" comment="поправил ВМЕСТЕ еще раз">
+      <change afterPath="$PROJECT_DIR$/pereriv18.05.2022.7z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Высота.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Высота.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Киров.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Киров.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/НСК.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/НСК.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Нижний Новгород.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Нижний Новгород.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ростов.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Ростов.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Смирновка.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Смирновка.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Тверь.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Тверь.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Фикс.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Фикс.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/перерывы_сборка.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/перерывы_сборка.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,14 +40,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="Python" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../pypy3.9-v7.3.9-win64/pypy3.9.exe" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/Python/Git/pereriv&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Python\Git\pereriv" />
@@ -170,9 +160,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.pereriv2" />
+        <item itemvalue="Python.pereriv1" />
         <item itemvalue="Python.pereriv4 (1)" />
         <item itemvalue="Python.pereriv3" />
-        <item itemvalue="Python.pereriv1" />
         <item itemvalue="Python.pereriv_lib" />
       </list>
     </recent_temporary>
@@ -193,7 +183,49 @@
       <option name="project" value="LOCAL" />
       <updated>1652899504494</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Добавлены:&#10;1) первый перерыв&#10;2) произвольные перерывы, если смена не по графику">
+      <created>1652899821416</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652899821416</updated>
+    </task>
+    <task id="LOCAL-00003" summary="убрал принт">
+      <created>1652899932808</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652899932808</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1. В pereriv1 добавил обработку перерывов менее 3 часов (ставится 0)&#10;2. В перерыв 2 добавил обраотку посленего перерыва: его можно поставить на произвольное место">
+      <created>1653041153326</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1653041153326</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Если первый или последний перерыв не совпадают по времени с графиком остальные перерывы пересчитываются">
+      <created>1653047678724</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1653047678724</updated>
+    </task>
+    <task id="LOCAL-00006" summary="поправил ВМЕСТЕ">
+      <created>1653332932296</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1653332932296</updated>
+    </task>
+    <task id="LOCAL-00007" summary="поправил ВМЕСТЕ еще раз">
+      <created>1653413684701</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1653413684701</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -222,6 +254,11 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Добавлены:&#10;1) первый перерыв&#10;2) произвольные перерывы, если смена не по графику" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены:&#10;1) первый перерыв&#10;2) произвольные перерывы, если смена не по графику" />
+    <MESSAGE value="убрал принт" />
+    <MESSAGE value="1. В pereriv1 добавил обработку перерывов менее 3 часов (ставится 0)&#10;2. В перерыв 2 добавил обраотку посленего перерыва: его можно поставить на произвольное место" />
+    <MESSAGE value="Если первый или последний перерыв не совпадают по времени с графиком остальные перерывы пересчитываются" />
+    <MESSAGE value="поправил ВМЕСТЕ" />
+    <MESSAGE value="поправил ВМЕСТЕ еще раз" />
+    <option name="LAST_COMMIT_MESSAGE" value="поправил ВМЕСТЕ еще раз" />
   </component>
 </project>
