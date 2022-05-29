@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="260858d6-0431-48ed-885e-90f82fe6bde7" name="Changes" comment="поправил ВМЕСТЕ еще раз">
-      <change afterPath="$PROJECT_DIR$/pereriv18.05.2022.7z" afterDir="false" />
+    <list default="true" id="260858d6-0431-48ed-885e-90f82fe6bde7" name="Changes" comment="поправил ФИКС">
+      <change afterPath="$PROJECT_DIR$/Архив/fix_14.04.2022.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/pereriv18.05.2022.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/pereriv18042022.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/pereriv2.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/pereriv_10.04,2022.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/user20220419.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/user20220521.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/Перерыв.2022.05.24.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Архив/Перерывы.20.05.2022.7z" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Перерыв.2022.05.26.7z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pereriv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/pereriv2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Фикс.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Фикс.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/операторы.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/операторы.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/перерывы_сборка.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/перерывы_сборка.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653413684701</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="поправил ФИКС">
+      <created>1653586824916</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1653586824916</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,6 +279,7 @@
     <MESSAGE value="Если первый или последний перерыв не совпадают по времени с графиком остальные перерывы пересчитываются" />
     <MESSAGE value="поправил ВМЕСТЕ" />
     <MESSAGE value="поправил ВМЕСТЕ еще раз" />
-    <option name="LAST_COMMIT_MESSAGE" value="поправил ВМЕСТЕ еще раз" />
+    <MESSAGE value="поправил ФИКС" />
+    <option name="LAST_COMMIT_MESSAGE" value="поправил ФИКС" />
   </component>
 </project>

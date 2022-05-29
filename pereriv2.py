@@ -734,10 +734,12 @@ try:
         fix_count = 0
         for i_fix in range(1, sheet_fix.max_row + 1):
             if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=4).value:
-                if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
+                if sheet_fix.cell(row=i_fix, column=2).value == "вместе":
                     #print(sheet_fix.cell(row=i_fix, column=3).value)
                     for n_fix in range(4, g):
-                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=1).value:
+                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=1).value \
+                                and sheet_rez.cell(row=4, column=n_fix).value == sheet_rez.cell(row=4, column=g).value \
+                                and sheet_rez.cell(row=5, column=n_fix).value == sheet_rez.cell(row=5, column=g).value:
                             for k_fix in range(10, sheet_rez.max_row + 1):
                                 sheet_rez.cell(row=k_fix, column=g).value = sheet_rez.cell(row=k_fix,
                                                                                            column=n_fix).value
@@ -748,10 +750,12 @@ try:
                     break
 
             if sheet_rez.cell(row=2, column=g).value == sheet_fix.cell(row=i_fix, column=1).value:
-                if sheet_fix.cell(row=i_fix, column=2).value == "вместе" and sheet_fix.cell(row=i_fix, column=3).value == sheet_rez.cell(row=7, column=g).value:
+                if sheet_fix.cell(row=i_fix, column=2).value == "вместе":
                     #print(sheet_fix.cell(row=i_fix, column=1).value)
                     for n_fix in range(4, g):
-                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=4).value:
+                        if sheet_rez.cell(row=2, column=n_fix).value == sheet_fix.cell(row=i_fix, column=4).value\
+                                and sheet_rez.cell(row=4, column=n_fix).value == sheet_rez.cell(row=4, column=g).value \
+                                and sheet_rez.cell(row=5, column=n_fix).value == sheet_rez.cell(row=5, column=g).value:
                             for k_fix in range(10, sheet_rez.max_row + 1):
                                 sheet_rez.cell(row=k_fix, column=g).value = sheet_rez.cell(row=k_fix,
                                                                                            column=n_fix).value
